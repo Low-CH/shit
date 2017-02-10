@@ -1,0 +1,44 @@
+addons:
+ apt:
+  packages:
+   - lynx
+
+language: android
+jdk: oraclejdk8
+
+before_install:
+    - chmod +x gradlew
+
+android:
+  components:
+    # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    - platform-tools
+    - tools
+
+    # The BuildTools version used by your project
+    #- build-tools-19.1.0
+    - build-tools-24.0.0
+    
+    # The SDK version used to compile your project
+    - android-25
+
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - extra-android-support
+    - addon-google_apis-google-23
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    #- sys-img-armeabi-v7a-android-23
+    - sys-img-x86-android-23    
+
+script: 
+    - "./gradlew build"
+    - if [ -f /home/travis/build/sgtech-ict2105/ict2105-team07-2017/app/build/outputs/lint-results-debug.html ]; then lynx -dump /home/travis/build/sgtech-ict2105/ict2105-team07-2017/app/build/outputs/lint-results-debug.html; fi
+
+    # Uncomment and specify the correct key for integration into Slack    
+notifications:
+  slack: ict2105:DvATQ19jTDnAQR2NKJhahtCJ
